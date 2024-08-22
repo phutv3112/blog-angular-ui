@@ -1,0 +1,73 @@
+<div class="container">
+    <h2>Category List</h2>
+    <div class="d-flex justify-content-between">
+        <div class="d-flex" role="search">
+            <input class="form-control me-2" type="search" #query placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="button" (click)="onSearch(query.value)">Search</button>
+        </div>
+        <a class="btn btn-primary" [routerLink]="['/admin/categories/add']" routerLinkActive="router-link-active">Add
+            Category</a>
+    </div>
+    <ng-container *ngIf="categories$ | async as categories">
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name
+                        <span>
+                            <span>
+                                <button class="btn btn-light" (click)="sort('name', 'asc')">
+                                    <i class="fas fa-arrow-down"></i>
+                                </button>
+                            </span>
+                            <span>
+                                <button class="btn btn-light" (click)="sort('name', 'desc')">
+                                    <i class="fas fa-arrow-up"></i>
+                                </button>
+                            </span>
+                        </span>
+                    </th>
+                    <th>Url Handle
+                        <span>
+                            <span>
+                                <button class="btn btn-light" (click)="sort('url', 'asc')">
+                                    <i class="fas fa-arrow-down"></i>
+                                </button>
+                            </span>
+                            <span>
+                                <button class="btn btn-light" (click)="sort('url', 'desc')">
+                                    <i class="fas fa-arrow-up"></i>
+                                </button>
+                            </span>
+                        </span>
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of categories">
+                    <td>{{ category.id }}</td>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.urlHandle }}</td>
+                    <td>
+                        <a [routerLink]="['/admin/categories', category.id]" routerLinkActive="router-link-active">
+                            Edit</a>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a style="cursor: pointer;" class="page-link"
+                        (click)="getPreviousPage()">Previous</a></li>
+                <li *ngFor="let item of list; let index = index" class="page-item">
+                    <a style="cursor: pointer;" class="page-link" (click)="getPage(index+1)">{{index+1}}</a>
+                </li>
+
+                <li class="page-item"><a style="cursor: pointer;" class="page-link" (click)="getNextPage()">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </ng-container>
+</div>

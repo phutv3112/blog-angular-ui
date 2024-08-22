@@ -1,0 +1,5 @@
+{
+    "explorer.compactFolders": false,
+    "appService.defaultWebAppToDeploy": "/subscriptions/668f9986-a0a0-4897-904d-569df1da94e4/resourceGroups/RgApi/providers/Microsoft.Web/sites/blogangularui",
+    "appService.deploySubpath": "."
+}

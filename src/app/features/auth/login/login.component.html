@@ -1,0 +1,52 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="card p-4 shadow" style="width: 100%; max-width: 400px; background-color: rgba(255, 255, 255, 0.9);">
+        <h2 class="text-center mb-4">LOGIN</h2>
+        <form class="mb-2" #form="ngForm" (ngSubmit)="onFormSubmit()">
+            <!-- <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email"
+                    placeholder="Enter your email">
+            </div> -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email"
+                        placeholder="Enter your email" aria-label="Email" aria-describedby="addon-wrapping">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" id="password" name="password"
+                        [(ngModel)]="model.password" placeholder="Enter your password" aria-label="Email"
+                        aria-describedby="addon-wrapping">
+                </div>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember me</label>
+            </div>
+            <button type="submit" class="btn w-100 text-light"
+                style="background-color: #07a151;border: none;">Login</button>
+        </form>
+        <div class="text-end">
+            <a href="#">Forgot your password?</a>
+        </div>
+        <div class="text-center mt-2">
+            <span class="px-3" (click)="onGoogleLogin()">
+                <i class="fab fa-google icon-social"
+                    style="background: linear-gradient(180deg, #4285F4 25%, #34A853 50%, #FBBC05 75%, #EA4335 100%); -webkit-background-clip: text; color: transparent;"></i>
+            </span>
+
+            <span class="px-3"><i class="fab fa-facebook icon-social" style="color:  #007bff;"></i></span>
+        </div>
+
+    </div>
+</div>
