@@ -30,6 +30,9 @@ export class ImageService {
   getAllImages(): Observable<BlogImage[]>{
     return this.http.get<BlogImage[]>(`${environment.apiBaseUrl}/api/Images`);
   }
+  deleteImage(id: string): Observable<void>{
+    return this.http.delete<void>(`${environment.apiBaseUrl}/api/Images/${id}`);
+  }
   selectImage(image: BlogImage):void{
     this.selectedImage.next(image);
   }

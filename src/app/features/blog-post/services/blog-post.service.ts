@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AddBlogPost } from '../models/add-blog-post.model';
 import { Observable } from 'rxjs';
@@ -16,8 +16,20 @@ export class BlogPostService {
   addBlogPost(model: AddBlogPost): Observable<BlogPost>{
     return this.http.post<BlogPost>(`${environment.apiBaseUrl}/api/BlogPosts?addAuth=true`, model);
   }
-  getAllBlogPosts(): Observable<BlogPost[]>{
-    return this.http.get<BlogPost[]>(`${environment.apiBaseUrl}/api/BlogPosts`);
+  getAllBlogPosts(pageNumber?: number, pageSize?: number): Observable<BlogPost[]>{
+    let params = new HttpParams();
+    if(pageNumber){
+      params = params.set('pageNumber', pageNumber);
+    }
+    if(pageSize){
+      params = params.set('pageSize', pageSize);
+    }
+    return this.http.get<BlogPost[]>(`${environment.apiBaseUrl}/api/BlogPosts`, {
+      params: params
+    });
+  }
+  getPostCount():Observable<number>{
+    return this.http.get<number>(`${environment.apiBaseUrl}/api/BlogPosts/count`);
   }
   getBlogPostById(id: string): Observable<BlogPost>{
     return this.http.get<BlogPost>(`${environment.apiBaseUrl}/api/BlogPosts/${id}?addAuth=true`);

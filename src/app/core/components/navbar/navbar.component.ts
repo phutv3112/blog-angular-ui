@@ -30,4 +30,14 @@ export class NavbarComponent implements OnInit{
     this.authService.logout();
     this.router.navigate(['/']);
   }
+  isAdminPage(): boolean {
+    return this.router.url.includes('/admin');
+  }
+  getClass(){
+    if(this.isAdminPage()){
+      return 'header_area'
+    }else{
+      return ''
+    }
+  }
 }

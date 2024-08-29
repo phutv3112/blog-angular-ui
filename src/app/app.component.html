@@ -1,10 +1,5 @@
-<!-- <div class="container-fluid"
-    style="height: 100vh;background: url('https://images.pexels.com/photos/261579/pexels-photo-261579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center; background-size: cover;">
-    <app-navbar *ngIf="!isLoginPage()"></app-navbar>
+<div [ngClass]="{'login-background': isAccountPage()}" class="container-fluid" style="height: 100vh;">
+    <app-navbar *ngIf="!isAccountPage()"></app-navbar>
     <router-outlet></router-outlet>
-</div> -->
-
-<div [ngClass]="{'login-background': isLoginPage()}" class="container-fluid" style="height: 100vh;">
-    <app-navbar *ngIf="!isLoginPage()"></app-navbar>
-    <router-outlet></router-outlet>
+    <app-footer *ngIf="!isAdminPage() && !isAccountPage()"></app-footer>
 </div>

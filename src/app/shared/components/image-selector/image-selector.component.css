@@ -1,0 +1,10 @@
+.btn-remove-img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+}
+.btn-remove-img:hover{
+    color: white !important ;
+    background-color: #dc3545;
+}

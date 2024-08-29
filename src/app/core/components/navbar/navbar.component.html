@@ -1,57 +1,10 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <ng-container
-                    *ngIf="user !== undefined && (user?.roles?.includes('Admin') || user?.roles?.includes('Writer'))">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Blog Angular
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a [routerLink]="['/admin/categories']" class="dropdown-item"
-                                    routerLinkActive="router-link-active">Categories
-                                </a>
-
-                            </li>
-                            <li>
-                                <a class="dropdown-item" [routerLink]="['/admin/blogposts']">
-                                    Blog Posts
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ng-container>
-            </ul>
-
-            <!-- <div class="d-flex">
-                <ng-container *ngIf="user === undefined;else showLogout">
-                    <a class="btn btn-primary" [routerLink]="['/login']">Login</a>
-                </ng-container>
-                <ng-template #showLogout>
-                    <div class="d-flex align-items-center">
-                        <span>{{user?.email}}</span>
-                        <button class="btn btn-secondary" (click)="onLogout()">Logout</button>
-                    </div>
-                </ng-template>
-            </div> -->
-        </div>
-    </div>
-</nav>
-
-<header class="header_area">
+<header class="header_area" [ngClass]="getClass()">
     <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container box_1620">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
+                <a class="navbar-brand logo_h" href="index.html"><img style="width: 143px;" src="img/logo-blog.png"
+                        alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -65,24 +18,32 @@
                         <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="archive.html">Archive</a></li>
                         <li class="nav-item"><a class="nav-link" href="category.html">Category</a>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-haspopup="true" aria-expanded="false">Pages</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="blog-details.html">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+                        <li class="nav-item"><a class="nav-link" [routerLink]="['/contact']">Contact</a></li>
+                        <ng-container
+                            *ngIf="user !== undefined && (user?.roles?.includes('Admin') || user?.roles?.includes('Writer'))">
+                            <li class="nav-item submenu dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                                    aria-haspopup="true" aria-expanded="false">Admin</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link"
+                                            [routerLink]="['/admin/categories']">Categories</a></li>
+                                    <li class="nav-item"><a class="nav-link" [routerLink]="['/admin/blogposts']">Blog
+                                            Posts</a></li>
+                                </ul>
+                            </li>
+
+                        </ng-container>
                     </ul>
                     <ul class="nav navbar-nav navbar-right navbar-social">
                         <ng-container *ngIf="user === undefined;else showLogout">
-                            <li>
-                                <a [routerLink]="['/login']"><i class="fas fa-user"></i> Login
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" [routerLink]="['/account/login']">
+                                    <i class="fas fa-user"></i> Login
                                 </a>
-                            </li>
+                            </div>
                         </ng-container>
                         <ng-template #showLogout>
-
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">

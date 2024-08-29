@@ -15,10 +15,42 @@ import { RouterLink } from '@angular/router';
 export class HomeComponent implements OnInit{
 
   blogPosts$? : Observable<BlogPost[]>
+
+  totalCount?: number;
+  pageNumber: number = 1;
+  pageSize: number = 3;
+
+  list: number[] = [];
+
   constructor(private blogPostService: BlogPostService){}
   ngOnInit(): void {
-    this.blogPosts$ = this.blogPostService.getAllBlogPosts();
+    this.blogPostService.getPostCount().subscribe({
+      next: (res) => {
+        this.totalCount = res;
+        this.list = new Array(Math.ceil(res / this.pageSize));
+        this.blogPosts$ = this.blogPostService.getAllBlogPosts(this.pageNumber, this.pageSize); 
+      }
+    });
   }
-
+  getPage(pageNumber: number){
+    this.pageNumber = pageNumber;
+    this.blogPosts$ = this.blogPostService.getAllBlogPosts(pageNumber, this.pageSize);
+  }
+  getNextPage(){
+    if(this.pageNumber + 1 > this.list.length){
+      return;
+    }
+    this.pageNumber += 1;
+    this.blogPosts$ = this.blogPostService.getAllBlogPosts(
+      this.pageNumber, this.pageSize);
+  }
+  getPreviousPage(){
+    if(this.pageNumber - 1 < 1){
+      return;
+    }
+    this.pageNumber -= 1;
+    this.blogPosts$ = this.blogPostService.getAllBlogPosts(
+      this.pageNumber, this.pageSize);
+  }
 
 }

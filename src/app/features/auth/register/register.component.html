@@ -1,0 +1,72 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="card p-4 pt-5 shadow"
+        style="width: 100%; max-width: 400px; background-color: rgba(255, 255, 255, 0.9);">
+        <h2 class="text-center mb-4 fs-2">BLOG ANGULAR</h2>
+        <form class="mb-2" #form="ngForm" (ngSubmit)="onFormSubmit()">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <input required type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email"
+                        placeholder="Enter your email" aria-label="Email" aria-describedby="addon-wrapping"
+                        #email="ngModel" (input)="errorMessage = ''">
+                </div>
+                <div *ngIf="email.invalid && email.touched" class="text-danger">
+                    <span class="login-error" *ngIf="email.errors?.['required']">Email is required.</span>
+                    <span class="login-error" *ngIf="email.errors?.['email']">Please enter a valid email address.</span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" id="password" name="password" required
+                        [(ngModel)]="model.password" placeholder="Enter your password" aria-label="Password"
+                        aria-describedby="addon-wrapping" minlength="6" #password="ngModel" (input)="errorMessage = ''">
+                </div>
+                <div *ngIf="password.invalid && password.touched" class="text-danger">
+                    <span class="login-error" *ngIf="password.errors?.['required']">Password is required.</span>
+                    <span class="login-error" *ngIf="password.errors?.['minlength']">Password must be at least 6
+                        characters long.</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password Confirmed</label>
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" required
+                        [(ngModel)]="model.passwordConfirm" placeholder="Enter your password" aria-label="Password"
+                        aria-describedby="addon-wrapping" minlength="6" #passwordConfirm="ngModel"
+                        (input)="checkPasswordMatch()">
+                </div>
+                <div *ngIf="passwordConfirm.invalid && passwordConfirm.touched" class="text-danger">
+                    <span class="login-error" *ngIf="passwordConfirm.errors?.['required']">Password is required.</span>
+                    <span class="login-error" *ngIf="passwordConfirm.errors?.['minlength']">Password must be at least 6
+                        characters long.</span>
+                </div>
+                <div *ngIf="passwordMatched" class="text-danger">
+                    <span class="login-error">{{passwordMatched}}</span>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn w-100 text-light" style="background-color: #07a151; border: none;"
+                    [disabled]="form.invalid">Register
+                </button>
+                <div *ngIf="errorMessage" class="text-danger">
+                    <span class="login-error">{{errorMessage}}</span>
+                </div>
+            </div>
+        </form>
+        <div class="text-center mt-2">
+            <span>Have an account? <a [routerLink]="['/account/login']">Sign in</a></span>
+        </div>
+    </div>
+</div>

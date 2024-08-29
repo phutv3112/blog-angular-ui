@@ -19,18 +19,18 @@ export const authGuard: CanActivateFn = (route, state) => {
     const currentDate = new Date().getTime();
     if(expirationDate < currentDate){
       authService.logout();
-      return router.createUrlTree(['/login'], {queryParams : {returnUrl:state.url}})
+      return router.createUrlTree(['/account/login'], {queryParams : {returnUrl:state.url}})
     }else{
       if(user.roles.includes('Admin') || user.roles.includes('Writer')){
         return true;
       }else{
         alert('FORBIDDEN')
         authService.logout();
-        return router.createUrlTree(['/login'], {queryParams : {returnUrl:state.url}})
+        return router.createUrlTree(['/account/login'], {queryParams : {returnUrl:state.url}})
       }
     }
   }else{
     authService.logout();
-    return router.createUrlTree(['/login'], {queryParams : {returnUrl:state.url}})
+    return router.createUrlTree(['/account/login'], {queryParams : {returnUrl:state.url}})
   }
 };

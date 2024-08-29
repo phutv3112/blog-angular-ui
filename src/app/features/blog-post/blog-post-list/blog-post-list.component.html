@@ -32,5 +32,22 @@
                 </tr>
             </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" (click)="getPreviousPage()" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li *ngFor="let item of list; let index = index" class="page-item"
+                    [class.active]="pageNumber == (index + 1)"><a class="page-link" (click)="getPage(index+1)">{{index +
+                        1}}</a></li>
+                <li class="page-item">
+                    <a class="page-link" (click)="getNextPage()" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </ng-container>
 </div>

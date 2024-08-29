@@ -61,7 +61,8 @@
             <ul class="pagination">
                 <li class="page-item"><a style="cursor: pointer;" class="page-link"
                         (click)="getPreviousPage()">Previous</a></li>
-                <li *ngFor="let item of list; let index = index" class="page-item">
+                <li *ngFor="let item of list; let index = index" class="page-item"
+                    [class.active]="pageNumber == (index + 1)">
                     <a style="cursor: pointer;" class="page-link" (click)="getPage(index+1)">{{index+1}}</a>
                 </li>
 

@@ -6,6 +6,8 @@ import { environment } from '../../../../environments/environment';
 import { LoginRequest } from '../models/login-request.model';
 import { User } from '../models/user.model';
 import { CookieService } from 'ngx-cookie-service';
+import { ForgotPasswordDto } from '../models/forgot-password.model';
+import { ResetPasswordDto } from '../models/reset-password.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +16,19 @@ export class AuthService {
 
   $user = new BehaviorSubject<User | undefined>(undefined);
   constructor(private http:HttpClient,
-    private cookieService: CookieService
+    private cookieService: CookieService,
   ) { }
 
   login(loginRequest: LoginRequest): Observable<LoginResponse>{
     return this.http.post<LoginResponse>(`${environment.apiBaseUrl}/api/Auth/login`,{
       email : loginRequest.email,
       password: loginRequest.password
+    })
+  }
+  register(registerRequest: LoginRequest): Observable<LoginResponse>{
+    return this.http.post<LoginResponse>(`${environment.apiBaseUrl}/api/Auth/register`,{
+      email : registerRequest.email,
+      password: registerRequest.password
     })
   }
   setUser(user: User): void{
@@ -44,14 +52,17 @@ export class AuthService {
     this.cookieService.delete('Authorization','/');
     this.$user.next(undefined);
   }
-  googleLogin() {
-    window.location.href = `${environment.apiBaseUrl}/api/Auth/google-login`;
+  loginWithGoogle(idToken: string):Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${environment.apiBaseUrl}/api/Auth/google-login`, { idToken });
+  }
+  loginWithFacebook(authToken: string):Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${environment.apiBaseUrl}/api/Auth/facebook-login`, { authToken });
   }
 
-  handleAuthentication() {
-    this.http.get(`${environment.apiBaseUrl}/api/Auth/google-login`)
-      .subscribe(response => {
-        console.log('Authenticated:', response);
-      });
+  forgotPassword(forgotPassword: ForgotPasswordDto): Observable<{message: string}>{
+    return this.http.post<{message: string}>(`${environment.apiBaseUrl}/api/Auth/forgot-password`, forgotPassword);
+  }
+  resetPassword(resetPassword: ResetPasswordDto, email: string, code: string): Observable<{message: string}>{
+    return this.http.post<{message: string}>(`${environment.apiBaseUrl}/api/Auth/reset-password?email=${email}&code=${code}`, resetPassword);
   }
 }

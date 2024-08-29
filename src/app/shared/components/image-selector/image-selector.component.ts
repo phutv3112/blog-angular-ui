@@ -46,4 +46,11 @@ export class ImageSelectorComponent implements OnInit{
   private getImages(){
     this.images$ = this.imageService.getAllImages();
   }
+  deleteImage(id: string):void{
+    this.imageService.deleteImage(id).subscribe({
+      next: () => {
+        this.getImages();
+      }
+    })
+  }
 }
