@@ -4,17 +4,21 @@ import { Observable } from 'rxjs';
 import { BlogPost } from '../../blog-post/models/blog-post.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CategoryService } from '../../category/services/category.service';
+import { CategoryCountPosts } from '../../category/models/categoryCountPosts';
+import { SidebarComponent } from "../sidebar/sidebar.component";
  
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, SidebarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
 
   blogPosts$? : Observable<BlogPost[]>
+  categoryCountPosts$? : Observable<CategoryCountPosts[]>
 
   totalCount?: number;
   pageNumber: number = 1;
@@ -22,7 +26,8 @@ export class HomeComponent implements OnInit{
 
   list: number[] = [];
 
-  constructor(private blogPostService: BlogPostService){}
+  constructor(private blogPostService: BlogPostService, private categoryService: CategoryService){
+  }
   ngOnInit(): void {
     this.blogPostService.getPostCount().subscribe({
       next: (res) => {
@@ -31,6 +36,7 @@ export class HomeComponent implements OnInit{
         this.blogPosts$ = this.blogPostService.getAllBlogPosts(this.pageNumber, this.pageSize); 
       }
     });
+    this.categoryCountPosts$ = this.categoryService.getCategoriesAndCountPosts();
   }
   getPage(pageNumber: number){
     this.pageNumber = pageNumber;

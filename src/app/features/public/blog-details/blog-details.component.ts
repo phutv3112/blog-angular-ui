@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BlogPostService } from '../../blog-post/services/blog-post.service';
 import { Observable } from 'rxjs';
 import { BlogPost } from '../../blog-post/models/blog-post.model';
 import { CommonModule } from '@angular/common';
 import { MarkdownComponent } from 'ngx-markdown';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-blog-details',
   standalone: true,
-  imports: [CommonModule, MarkdownComponent],
+  imports: [CommonModule, MarkdownComponent, RouterLink, SidebarComponent],
   templateUrl: './blog-details.component.html',
   styleUrl: './blog-details.component.css'
 })

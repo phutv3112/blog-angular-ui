@@ -3,6 +3,9 @@ import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/rou
 import { AuthService } from '../../../features/auth/services/auth.service';
 import { User } from '../../../features/auth/models/user.model';
 import { CommonModule } from '@angular/common';
+import { CategoryCountPosts } from '../../../features/category/models/categoryCountPosts';
+import { Observable } from 'rxjs';
+import { CategoryService } from '../../../features/category/services/category.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,11 +15,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit{
-
+  categoryCountPosts$? : Observable<CategoryCountPosts[]>
   user?:User;
 
   constructor(private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private categoryService: CategoryService
   ){}
   ngOnInit(): void {
     this.authService.user().subscribe({
@@ -25,6 +29,7 @@ export class NavbarComponent implements OnInit{
       }
     })
     this.user = this.authService.getUser();
+    this.categoryCountPosts$ = this.categoryService.getCategoriesAndCountPosts();
   }
   onLogout(){
     this.authService.logout();

@@ -13,6 +13,7 @@ import { ContactComponent } from './features/public/contact/contact.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
+import { CategoryDetailsComponent } from './features/public/category-details/category-details.component';
 
 export const routes: Routes = [
     {
@@ -51,6 +52,10 @@ export const routes: Routes = [
     {
         path:"blogs/:url",
         component: BlogDetailsComponent
+    },
+    {
+        path:"category",
+        component: CategoryDetailsComponent
     },
     {
         path:"admin/blogposts",

@@ -31,11 +31,26 @@ export class BlogPostService {
   getPostCount():Observable<number>{
     return this.http.get<number>(`${environment.apiBaseUrl}/api/BlogPosts/count`);
   }
+  getCountCategoryPosts(cateId: string):Observable<number>{
+    return this.http.get<number>(`${environment.apiBaseUrl}/api/BlogPosts/count-category-posts?categoryId=${cateId}`);
+  }
   getBlogPostById(id: string): Observable<BlogPost>{
     return this.http.get<BlogPost>(`${environment.apiBaseUrl}/api/BlogPosts/${id}?addAuth=true`);
   }
   getBlogPostByUrl(url:string): Observable<BlogPost>{
     return this.http.get<BlogPost>(`${environment.apiBaseUrl}/api/BlogPosts/${url}?addAuth=true`);
+  }
+  getPostsByCategory(cateId:string, pageNumber?: number, pageSize?: number): Observable<BlogPost[]>{
+    let params = new HttpParams();
+    if(pageNumber){
+      params = params.set('pageNumber', pageNumber);
+    }
+    if(pageSize){
+      params = params.set('pageSize', pageSize);
+    }
+    return this.http.get<BlogPost[]>(`${environment.apiBaseUrl}/api/BlogPosts/get-by-category?categoryId=${cateId}`,{
+      params : params
+    });
   }
   updateBlogPost(id: string, post: UpdateBlogPost): Observable<void>{
     return this.http.put<void>(`${environment.apiBaseUrl}/api/BlogPosts/${id}?addAuth=true`, post);

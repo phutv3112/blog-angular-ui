@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container box_1620">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                <a class="navbar-brand logo_h" href="index.html"><img style="width: 143px;" src="img/logo-blog.png"
+                <a class="navbar-brand logo_h" [routerLink]="['/']"><img style="width: 143px;" src="img/logo-blog.png"
                         alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -15,9 +15,25 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav justify-content-center">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item active"><a class="nav-link" [routerLink]="['/']">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="archive.html">Archive</a></li>
-                        <li class="nav-item"><a class="nav-link" href="category.html">Category</a>
+                        <li class="nav-item submenu dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">Popular Categories</a>
+                            <ul class="dropdown-menu">
+                                <ng-container *ngIf="categoryCountPosts$ | async as categories">
+                                    <!-- <li *ngFor="let cate of categories" class="nav-item"><a class="nav-link"
+                                            [routerLink]="['/admin/categories']">{{cate.name}}</a></li> -->
+                                    <li *ngFor="let cate of categories" class="nav-item">
+                                        <a [routerLink]="['/category']" [queryParams]="{ categoryId: cate.cateId}"
+                                            class="d-flex justify-content-between nav-link">
+                                            <p class="m-0">{{cate.name}}</p>
+                                            <p class="m-0">({{cate.countPosts}})</p>
+                                        </a>
+                                    </li>
+                                </ng-container>
+                            </ul>
+                        </li>
 
                         <li class="nav-item"><a class="nav-link" [routerLink]="['/contact']">Contact</a></li>
                         <ng-container
@@ -26,9 +42,9 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                     aria-haspopup="true" aria-expanded="false">Admin</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link"
-                                            [routerLink]="['/admin/categories']">Categories</a></li>
-                                    <li class="nav-item"><a class="nav-link" [routerLink]="['/admin/blogposts']">Blog
+                                    <li class="nav-item"><a class="nav-link" [routerLink]="['/admin/categories']">Manage
+                                            Categories</a></li>
+                                    <li class="nav-item"><a class="nav-link" [routerLink]="['/admin/blogposts']">Manage
                                             Posts</a></li>
                                 </ul>
                             </li>

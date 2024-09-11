@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Category } from '../models/category.model';
 import { UpdateCategoryRequest } from '../models/update-category-request.model';
+import { CategoryCountPosts } from '../models/categoryCountPosts';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +38,11 @@ export class CategoryService {
       params: params
     })
   }
+  getCategoriesAndCountPosts(): Observable<CategoryCountPosts[]>{
+    return this.http.get<CategoryCountPosts[]>(`${environment.apiBaseUrl}/api/Categories/categories-count-posts`);
+  }
   getCategoryById(id: string):Observable<Category>{
-    return this.http.get<Category>(`${environment.apiBaseUrl}/api/categories/${id}?addAuth=true`);
+    return this.http.get<Category>(`${environment.apiBaseUrl}/api/Categories/${id}`);
   }
   getCategoryCount():Observable<number>{
     return this.http.get<number>(`${environment.apiBaseUrl}/api/categories/count`);
