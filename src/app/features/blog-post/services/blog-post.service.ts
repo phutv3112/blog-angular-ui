@@ -40,6 +40,15 @@ export class BlogPostService {
   getBlogPostByUrl(url:string): Observable<BlogPost>{
     return this.http.get<BlogPost>(`${environment.apiBaseUrl}/api/BlogPosts/${url}?addAuth=true`);
   }
+  likePost(userId: string, url:string): Observable<number>{
+    return this.http.get<number>(`${environment.apiBaseUrl}/api/BlogPosts/like-post/${url}?userId=${userId}`);
+  }
+  getLikePost(url:string): Observable<number>{
+    return this.http.get<number>(`${environment.apiBaseUrl}/api/BlogPosts/get-like-post/${url}`);
+  }
+  checkLiked(userId: string, url:string): Observable<boolean>{
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/api/BlogPosts/check-liked/${url}?userId=${userId}`);
+  }
   getPostsByCategory(cateId:string, pageNumber?: number, pageSize?: number): Observable<BlogPost[]>{
     let params = new HttpParams();
     if(pageNumber){
