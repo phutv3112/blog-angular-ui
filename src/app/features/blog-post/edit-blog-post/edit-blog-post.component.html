@@ -1,5 +1,9 @@
-<div class="container">
-    <h2>Edit Blog Post</h2>
+<div class="container py-3">
+    <div class="d-flex justify-content-between">
+        <h2>Edit Blog Post</h2>
+        <a class="btn btn-primary btn-sm" [routerLink]="['/admin/post/comments', id]">
+            Show Comments</a>
+    </div>
     <ng-container *ngIf="model">
         <form #form="ngForm" (ngSubmit)="onFormSubmit()">
             <div class="mt-2">
@@ -41,25 +45,25 @@
                         name="featuredImageUrl" id="featuredImageUrl">
 
                 </div>
-                <div class="mt-3">
+                <!-- <div class="mt-3">
                     <label for="urlHandle" class="form-label">Url Handle</label>
                     <input type="text" [(ngModel)]="model.urlHandle" class="form-control" name="urlHandle"
                         id="urlHandle" required minlength="3">
 
-                </div>
-                <div class="mt-3">
+                </div> -->
+                <!-- <div class="mt-3">
                     <label for="publishedDate" class="form-label">Published Date</label>
                     <input type="date" value="{{model.publishedDate}}" (ngModelChange)="model.publishedDate = $event"
                         [ngModel]="model.publishedDate | date: 'yyyy-MM-dd'" class="form-control" name="publishedDate"
                         id="publishedDate">
 
-                </div>
-                <div class="mt-3">
+                </div> -->
+                <!-- <div class="mt-3">
                     <label for="author" class="form-label">Author</label>
                     <input type="text" [(ngModel)]="model.author" class="form-control" name="author" id="author"
                         required minlength="3">
 
-                </div>
+                </div> -->
                 <div class="mt-3">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" [(ngModel)]="model.isVisible" value=""
@@ -80,8 +84,11 @@
 
                 </div>
                 <div class="mt-3">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button class="btn btn-danger ms-2" (click)="onDelete()">Delete</button>
+                    <ng-container *ngIf="model.authorName.toLocaleLowerCase() == 'admin'">
+                        <button type="submit" class="btn btn-primary me-2">Save</button>
+                    </ng-container>
+                    <button class="btn btn-danger me-2" (click)="onDelete()">Delete</button>
+                    <a [routerLink]="['/']" class="btn btn-secondary">Back</a>
                 </div>
             </div>
         </form>

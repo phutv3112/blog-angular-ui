@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BlogPostService } from '../services/blog-post.service';
 import { BlogPost } from '../models/blog-post.model';
 import { Observable, Subscription } from 'rxjs';
@@ -10,11 +10,13 @@ import { CategoryService } from '../../category/services/category.service';
 import { Category } from '../../category/models/category.model';
 import { ImageSelectorComponent } from "../../../shared/components/image-selector/image-selector.component";
 import { ImageService } from '../../../shared/components/image-selector/image.service';
+import { CookieService } from 'ngx-cookie-service';
+import { TokenHelper } from '../../../shared/helpers/token-helper';
 
 @Component({
   selector: 'app-edit-blog-post',
   standalone: true,
-  imports: [CommonModule, FormsModule, MarkdownComponent, ImageSelectorComponent],
+  imports: [CommonModule, FormsModule, MarkdownComponent, RouterLink,ImageSelectorComponent],
   templateUrl: './edit-blog-post.component.html',
   styleUrl: './edit-blog-post.component.css'
 })
@@ -32,13 +34,18 @@ export class EditBlogPostComponent implements OnInit, OnDestroy {
   selectedCategories?: string[];
 
   isImageSelectorVisible: boolean = false;
+  decodedUserId: string;
 
   constructor(private route : ActivatedRoute,
     private blogPostService: BlogPostService,
     private router: Router,
     private categoryService: CategoryService,
-    private imageService: ImageService
-  ){}
+    private imageService: ImageService,
+    private cookieService: CookieService
+  ){
+    const authToken = this.cookieService.get('Authorization');
+    this.decodedUserId = TokenHelper.getUserId(authToken);
+  }
 
   ngOnInit(): void {
 
@@ -73,9 +80,8 @@ export class EditBlogPostComponent implements OnInit, OnDestroy {
         shortDescription: this.model.shortDescription,
         content: this.model.content,
         featuredImageUrl: this.model.featuredImageUrl,
-        urlHandle: this.model.urlHandle,
-        publishedDate: this.model.publishedDate,
-        author: this.model.author,
+        publishedDate: new Date(),
+        authorId: this.decodedUserId,
         isVisible: this.model.isVisible,
         categories: this.selectedCategories ?? []
       }

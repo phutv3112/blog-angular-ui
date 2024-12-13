@@ -14,6 +14,9 @@ import { RegisterComponent } from './features/auth/register/register.component';
 import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
 import { CategoryDetailsComponent } from './features/public/category-details/category-details.component';
+import { UserPostsComponent } from './features/public/user-posts/user-posts.component';
+import { UserProfileComponent } from './features/public/user-profile/user-profile.component';
+import { PostCommentComponent } from './features/blog-post/post-comment/post-comment.component';
 
 export const routes: Routes = [
     {
@@ -58,9 +61,21 @@ export const routes: Routes = [
         component: CategoryDetailsComponent
     },
     {
+        path:"posts/user",
+        component: UserPostsComponent
+    },
+    {
+        path:"user/profile/:id",
+        component: UserProfileComponent
+    },
+    {
         path:"admin/blogposts",
         component: BlogPostListComponent,
         canActivate: [authGuard]
+    },
+    {
+        path:"admin/post/comments/:id",
+        component: PostCommentComponent,
     },
     {
         path:"contact",

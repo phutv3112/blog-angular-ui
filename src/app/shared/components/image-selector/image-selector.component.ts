@@ -14,7 +14,6 @@ import { BlogImage } from '../../models/blog-image.model';
 })
 export class ImageSelectorComponent implements OnInit{
   private file? :File;
-  fileName:string ="";
   title: string = "";
 
   images$?: Observable<BlogImage[]>
@@ -30,8 +29,8 @@ export class ImageSelectorComponent implements OnInit{
     this.file = element.files?.[0];
   }
   uploadImage(){
-      if(this.file && this.fileName !== '' && this.title !== ''){
-        this.imageService.uploadImage(this.file, this.fileName, this.title).subscribe({
+      if(this.file && this.title !== ''){
+        this.imageService.uploadImage(this.file, this.title).subscribe({
           next: (res) => {
             console.log(res);
             this.getImages();

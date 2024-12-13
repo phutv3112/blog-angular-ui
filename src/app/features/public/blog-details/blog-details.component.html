@@ -1,10 +1,12 @@
-<section class="blog-post-area">
+<section class="blog-post-area mt-5">
     <div class="container">
         <div class="row">
             <ng-container *ngIf="blogPost$ | async as blog;else loader">
                 <div class="col-lg-8">
                     <div class="main_blog_details">
-                        <img class="img-fluid" [src]="blog.featuredImageUrl" alt="">
+                        <div>
+                            <img class="img-fluid" [src]="blog.featuredImageUrl" alt="">
+                        </div>
                         <a href="#">
                             <h4>{{blog.title}}</h4>
                         </a>
@@ -16,7 +18,7 @@
                             <div class="float-right mt-sm-0 mt-3">
                                 <div class="media">
                                     <div class="media-body">
-                                        <h5>{{blog.author}}</h5>
+                                        <h5>{{blog.authorName}}</h5>
                                         <p>12 Dec, 2017 11:21 am</p>
                                     </div>
                                     <div class="d-flex">
@@ -44,13 +46,24 @@
                             at a
                             fraction of the camp price. However, who has the willpower</p>
                         <div class="news_d_footer flex-column flex-sm-row">
-                            <a>
+                            <a style="cursor: pointer;">
                                 <span class="align-middle mr-2" (click)="onLikeClick()">
                                     <i class="fas fa-heart" [ngClass]="{'liked-color': isLiked}"></i>
                                 </span>{{like}} people
                                 like this</a>
-                            <a class="justify-content-sm-center ml-sm-auto mt-sm-0 mt-2" href="#"><span
-                                    class="align-middle mr-2"><i class="ti-themify-favicon"></i></span>06 Comments</a>
+                            <a class="justify-content-sm-center ml-sm-auto mt-sm-0 mt-2" href="javascript:void(0)"
+                                (click)="toggleCommentBox()">
+                                <span class="align-middle mr-2">
+                                    <i class="ti-themify-favicon"></i>
+                                </span>
+                                06 Comments
+                            </a>
+
+                            <div *ngIf="showCommentBox" class="mt-3">
+                                <textarea class="form-control" rows="3"
+                                    placeholder="Write your comment here..."></textarea>
+                                <button class="btn btn-primary mt-2">Submit</button>
+                            </div>
                             <div class="news_socail ml-sm-auto mt-sm-0 mt-2">
                                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                                 <a href="#"><i class="fab fa-twitter"></i></a>

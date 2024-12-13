@@ -10,6 +10,8 @@ import { Category } from '../../category/models/category.model';
 import { CategoryService } from '../../category/services/category.service';
 import { ImageSelectorComponent } from '../../../shared/components/image-selector/image-selector.component';
 import { ImageService } from '../../../shared/components/image-selector/image.service';
+import { CookieService } from 'ngx-cookie-service';
+import { TokenHelper } from '../../../shared/helpers/token-helper';
 
 @Component({
   selector: 'app-add-blogpost',
@@ -31,15 +33,17 @@ export class AddBlogpostComponent implements OnDestroy, OnInit{
   constructor(private blogPostService: BlogPostService, 
     private router: Router,
     private categoryService: CategoryService,
-    private imageService: ImageService){
+    private imageService: ImageService, 
+    private cookieService: CookieService){
+      const authToken = this.cookieService.get('Authorization');
+      var decodedUserId = TokenHelper.getUserId(authToken);
     this.model = {
       title: '',
       shortDescription: '',
       content: '',
       featuredImageUrl: '',
-      urlHandle: '',
       publishedDate: new Date(),
-      author: '',
+      authorId: decodedUserId,
       isVisible: true,
       categories: []
     };

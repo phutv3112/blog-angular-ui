@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="comments-admin-container">
+        <h2>Post Title: {{ postTitle }}</h2>
+        <div class="mb-3 d-flex" role="search">
+            <input class="form-control me-2" type="search" #query placeholder="Enter author or content..."
+                aria-label="Search">
+            <button class="btn btn-sm btn-success" type="button" (click)="onSearch(query.value)">Search</button>
+        </div>
+        <div *ngIf="comments && comments.length > 0; else noComments">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Author</th>
+                        <th>Content</th>
+                        <th>Updated Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let comment of comments; let index = index">
+                        <td>{{index + 1}}</td>
+                        <td>{{ comment.authorName }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.updatedDate}}</td>
+                        <td>
+                            <button class="btn-sm btn-danger" (click)="deleteComment(comment.id)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav class="mt-3" aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" (click)="getPreviousPage()" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li *ngFor="let item of list; let index = index" class="page-item"
+                        [class.active]="pageNumber == (index + 1)"><a class="page-link"
+                            (click)="getPage(index+1)">{{index +
+                            1}}</a></li>
+                    <li class="page-item">
+                        <a class="page-link" (click)="getNextPage()" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <ng-template #noComments>
+            <p>This post does not have any comments!</p>
+        </ng-template>
+    </div>
+</div>

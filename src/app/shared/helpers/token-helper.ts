@@ -19,12 +19,12 @@ export class TokenHelper {
         return null;
       }
     }
-    static getUserId(token: string): string | null {
+    static getUserId(token: string): string  {
         const decodedToken = TokenHelper.decodeToken(token);
         if (decodedToken) {
           return decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || null;
         }
-        return null;
+        return "null";
     }
   }
   

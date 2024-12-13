@@ -16,7 +16,9 @@
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav justify-content-center">
                         <li class="nav-item active"><a class="nav-link" [routerLink]="['/']">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="archive.html">Archive</a></li>
+                        <li class="nav-item"><a class="nav-link" [routerLink]="['/posts/user']"
+                                [queryParams]="{ authorId: userId}">My Posts</a>
+                        </li>
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                 aria-haspopup="true" aria-expanded="false">Popular Categories</a>
@@ -66,8 +68,9 @@
                                     <i class="fas fa-user"></i> {{user?.email}}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" style="cursor: pointer;" href="#"><i
-                                                class="fas fa-user"></i> Profile</a></li>
+                                    <li><a class="dropdown-item" style="cursor: pointer;"
+                                            [routerLink]="['/user/profile', userId]"><i class="fas fa-user"></i>
+                                            Profile</a></li>
                                     <li><a class="dropdown-item" style="cursor: pointer;" (click)="onLogout()"><i
                                                 class="fas fa-sign-out-alt"></i> Logout</a></li>
                                 </ul>

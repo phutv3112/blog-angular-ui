@@ -16,8 +16,11 @@ export class BlogPostService {
   addBlogPost(model: AddBlogPost): Observable<BlogPost>{
     return this.http.post<BlogPost>(`${environment.apiBaseUrl}/api/BlogPosts?addAuth=true`, model);
   }
-  getAllBlogPosts(pageNumber?: number, pageSize?: number): Observable<BlogPost[]>{
+  getAllBlogPosts(query?:string, pageNumber?: number, pageSize?: number): Observable<BlogPost[]>{
     let params = new HttpParams();
+    if(query){
+      params = params.set('query', query);
+    }
     if(pageNumber){
       params = params.set('pageNumber', pageNumber);
     }
@@ -33,6 +36,9 @@ export class BlogPostService {
   }
   getCountCategoryPosts(cateId: string):Observable<number>{
     return this.http.get<number>(`${environment.apiBaseUrl}/api/BlogPosts/count-category-posts?categoryId=${cateId}`);
+  }
+  getCountUserPosts(authorId: string):Observable<number>{
+    return this.http.get<number>(`${environment.apiBaseUrl}/api/BlogPosts/count-user-posts?authorId=${authorId}`);
   }
   getBlogPostById(id: string): Observable<BlogPost>{
     return this.http.get<BlogPost>(`${environment.apiBaseUrl}/api/BlogPosts/${id}?addAuth=true`);
@@ -61,10 +67,22 @@ export class BlogPostService {
       params : params
     });
   }
+  getPostsByAuthor(authorId:string, pageNumber?: number, pageSize?: number): Observable<BlogPost[]>{
+    let params = new HttpParams();
+    if(pageNumber){
+      params = params.set('pageNumber', pageNumber);
+    }
+    if(pageSize){
+      params = params.set('pageSize', pageSize);
+    }
+    return this.http.get<BlogPost[]>(`${environment.apiBaseUrl}/api/BlogPosts/get-by-author?authorId=${authorId}`,{
+      params : params
+    });
+  }
   updateBlogPost(id: string, post: UpdateBlogPost): Observable<void>{
     return this.http.put<void>(`${environment.apiBaseUrl}/api/BlogPosts/${id}?addAuth=true`, post);
   }
   deleteBlogPost(id: string): Observable<void>{
-    return this.http.delete<void>(`${environment.apiBaseUrl}/api/BlogPosts/${id}?addAuth=true`);
+    return this.http.delete<void>(`${environment.apiBaseUrl}/api/BlogPosts/admin/${id}?addAuth=true`);
   }
 }

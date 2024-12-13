@@ -1,18 +1,19 @@
 <div class="container">
     <h2>Category List</h2>
     <div class="d-flex justify-content-between">
-        <div class="d-flex" role="search">
-            <input class="form-control me-2" type="search" #query placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="button" (click)="onSearch(query.value)">Search</button>
-        </div>
+
         <a class="btn btn-primary" [routerLink]="['/admin/categories/add']" routerLinkActive="router-link-active">Add
             Category</a>
+    </div>
+    <div class="d-flex mt-3" role="search">
+        <input class="form-control" type="search" #query placeholder="Enter category name..." aria-label="Search">
+        <button class="btn btn-outline-success" type="button" (click)="onSearch(query.value)">Search</button>
     </div>
     <ng-container *ngIf="categories$ | async as categories">
         <table class="table table-bordered mt-3">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>#</th>
                     <th>Name
                         <span>
                             <span>
@@ -45,13 +46,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let category of categories">
-                    <td>{{ category.id }}</td>
+                <tr *ngFor="let category of categories; let index = index">
+                    <td>{{ index + 1 }}</td>
                     <td>{{ category.name }}</td>
                     <td>{{ category.urlHandle }}</td>
                     <td>
                         <a [routerLink]="['/admin/categories', category.id]" routerLinkActive="router-link-active">
-                            Edit</a>
+                            <i class="far fa-edit"></i></a>
                     </td>
                 </tr>
             </tbody>
@@ -59,14 +60,18 @@
         </table>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item"><a style="cursor: pointer;" class="page-link"
-                        (click)="getPreviousPage()">Previous</a></li>
-                <li *ngFor="let item of list; let index = index" class="page-item"
-                    [class.active]="pageNumber == (index + 1)">
-                    <a style="cursor: pointer;" class="page-link" (click)="getPage(index+1)">{{index+1}}</a>
+                <li class="page-item">
+                    <a class="page-link" (click)="getPreviousPage()" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
                 </li>
-
-                <li class="page-item"><a style="cursor: pointer;" class="page-link" (click)="getNextPage()">Next</a>
+                <li *ngFor="let item of list; let index = index" class="page-item"
+                    [class.active]="pageNumber == (index + 1)"><a class="page-link" (click)="getPage(index+1)">{{index +
+                        1}}</a></li>
+                <li class="page-item">
+                    <a class="page-link" (click)="getNextPage()" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
                 </li>
             </ul>
         </nav>

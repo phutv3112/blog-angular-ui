@@ -3,9 +3,8 @@ export interface UpdateBlogPost{
     shortDescription: string;
     content: string;
     featuredImageUrl: string;
-    urlHandle: string;
     publishedDate: Date;
-    author: string;
+    authorId: string;
     isVisible: boolean;
     categories: string[];
 }

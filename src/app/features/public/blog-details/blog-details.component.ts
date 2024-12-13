@@ -22,6 +22,7 @@ export class BlogDetailsComponent implements OnInit {
   like : number = 0;
   isLiked: boolean = false;
   decodedUserId: string | null = null;
+  showCommentBox = false;
 
   blogPost$?: Observable<BlogPost>;
 
@@ -35,6 +36,7 @@ export class BlogDetailsComponent implements OnInit {
     this.route.paramMap.subscribe({
       next: (params) => {
         this.url = params.get('url');
+        console.log('URL:', this.url);
         if(this.url){
           this.blogPost$ = this.blogPostService.getBlogPostByUrl(this.url);
           this.blogPostService.getLikePost(this.url).subscribe({
@@ -85,5 +87,9 @@ export class BlogDetailsComponent implements OnInit {
         }
       });
     }
+  }
+
+  toggleCommentBox(): void {
+    this.showCommentBox = !this.showCommentBox;
   }
 }

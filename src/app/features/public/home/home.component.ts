@@ -33,21 +33,21 @@ export class HomeComponent implements OnInit{
       next: (res) => {
         this.totalCount = res;
         this.list = new Array(Math.ceil(res / this.pageSize));
-        this.blogPosts$ = this.blogPostService.getAllBlogPosts(this.pageNumber, this.pageSize); 
+        this.blogPosts$ = this.blogPostService.getAllBlogPosts(undefined, this.pageNumber, this.pageSize); 
       }
     });
     this.categoryCountPosts$ = this.categoryService.getCategoriesAndCountPosts();
   }
   getPage(pageNumber: number){
     this.pageNumber = pageNumber;
-    this.blogPosts$ = this.blogPostService.getAllBlogPosts(pageNumber, this.pageSize);
+    this.blogPosts$ = this.blogPostService.getAllBlogPosts(undefined, pageNumber, this.pageSize);
   }
   getNextPage(){
     if(this.pageNumber + 1 > this.list.length){
       return;
     }
     this.pageNumber += 1;
-    this.blogPosts$ = this.blogPostService.getAllBlogPosts(
+    this.blogPosts$ = this.blogPostService.getAllBlogPosts(undefined, 
       this.pageNumber, this.pageSize);
   }
   getPreviousPage(){
@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit{
       return;
     }
     this.pageNumber -= 1;
-    this.blogPosts$ = this.blogPostService.getAllBlogPosts(
+    this.blogPosts$ = this.blogPostService.getAllBlogPosts(undefined,
       this.pageNumber, this.pageSize);
   }
 
