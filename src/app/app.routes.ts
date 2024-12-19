@@ -17,6 +17,7 @@ import { CategoryDetailsComponent } from './features/public/category-details/cat
 import { UserPostsComponent } from './features/public/user-posts/user-posts.component';
 import { UserProfileComponent } from './features/public/user-profile/user-profile.component';
 import { PostCommentComponent } from './features/blog-post/post-comment/post-comment.component';
+import { AdminManageComponent } from './features/admin/admin-manage/admin-manage.component';
 
 export const routes: Routes = [
     {
@@ -71,6 +72,11 @@ export const routes: Routes = [
     {
         path:"admin/blogposts",
         component: BlogPostListComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path:"admin/manage",
+        component: AdminManageComponent,
         canActivate: [authGuard]
     },
     {

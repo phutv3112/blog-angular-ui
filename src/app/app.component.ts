@@ -29,4 +29,7 @@ export class AppComponent {
   isAdminPage(): boolean {
     return this.router.url.includes('/admin');
   }
+  isAdminManagerPage(): boolean {
+    return this.router.url.includes('/admin/manage');
+  }
 }

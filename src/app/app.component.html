@@ -1,5 +1,10 @@
-<div [ngClass]="{'login-background': isAccountPage()}" class="container-fluid p-0" style="height: 100vh;">
-    <app-navbar *ngIf="!isAccountPage()"></app-navbar>
+<ng-container *ngIf="isAdminManagerPage();else showUserPage">
     <router-outlet></router-outlet>
-    <app-footer *ngIf="!isAdminPage() && !isAccountPage()"></app-footer>
-</div>
+</ng-container>
+<ng-template #showUserPage>
+    <div [ngClass]="{'login-background': isAccountPage()}" class="container-fluid p-0" style="height: 100vh;">
+        <app-navbar *ngIf="!isAccountPage()"></app-navbar>
+        <router-outlet></router-outlet>
+        <app-footer *ngIf="!isAdminPage() && !isAccountPage()"></app-footer>
+    </div>
+</ng-template>
